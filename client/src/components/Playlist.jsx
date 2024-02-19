@@ -43,7 +43,7 @@ const Playlist = ({
 
     try {
       const response = await axios.get(
-        `http://localhost:4000/generate?seeds=${selectedIds}`
+        `https://song-recommender-server.vercel.app/generate?seeds=${selectedIds}`
       );
       setRecoTracks(response.data.tracks);
       setIsRecoOpen(true);
