@@ -51,7 +51,7 @@ input {
 }
 
 .playlist-item {
-    @apply flex h-10 justify-between rounded-md
+    @apply flex h-10 justify-between rounded-md cursor-pointer
 }
 
 .reco-main {
