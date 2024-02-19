@@ -93,6 +93,10 @@ const checkTokenMiddleware = async (req, res, next) => {
   }
 };
 
+app.get("/", (req, res) => {
+  res.send("Server is running.");
+});
+
 // Route for fetching data from Spotify
 app.get("/search", checkTokenMiddleware, async (req, res) => {
   const query = req.query.query;
