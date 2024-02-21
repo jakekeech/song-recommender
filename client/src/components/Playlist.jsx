@@ -43,7 +43,7 @@ const Playlist = ({
 
     try {
       const response = await axios.get(
-        `https://song-recommender-backend.onrender.com//generate?seeds=${selectedIds}`
+        `https://song-recommender-backend.onrender.com/generate?seeds=${selectedIds}`
       );
       setRecoTracks(response.data.tracks);
       setIsRecoOpen(true);
