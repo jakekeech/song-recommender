@@ -75,7 +75,7 @@ const Playlist = ({
           return (
             <div
               key={index}
-              className="playlist-item"
+              className="playlist-item cursor-pointer"
               onClick={() => handleSelectTrack(track)}
             >
               <div className="flex">
