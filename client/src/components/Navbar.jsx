@@ -10,7 +10,7 @@ const Navbar = () => {
         </span>
       </h1>
       <a
-        href="https://github.com/jakekeech"
+        href="https://github.com/jakekeech/song-recommender"
         target="_blank"
         rel="noopener noreferrer"
         className="flex"
