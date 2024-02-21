@@ -15,7 +15,7 @@ const Search = ({ onResultSelect }) => {
     console.log(`Searching for ${searchInput}`);
     try {
       const response = await axios.get(
-        `https://song-recommender-server.vercel.app/search?query=${searchInput}`
+        `https://song-recommender-backend.onrender.com/search?query=${searchInput}`
       );
       setSearchResults(response.data.tracks.items);
     } catch (error) {
