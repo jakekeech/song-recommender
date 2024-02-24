@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import axios from "axios";
+import axiosInstance from "../api/index.js";
 
 const Playlist = ({
   playlist,
@@ -42,8 +42,8 @@ const Playlist = ({
     }
 
     try {
-      const response = await axios.get(
-        `https://song-recommender-backend.onrender.com/generate?seeds=${selectedIds}`
+      const response = await axiosInstance.get(
+        `/generate?seeds=${selectedIds}`
       );
       setRecoTracks(response.data.tracks);
       setIsRecoOpen(true);

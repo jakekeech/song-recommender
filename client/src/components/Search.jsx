@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../api/index.js";
 import PropTypes from "prop-types";
 
 import { FaSearch } from "react-icons/fa";
@@ -14,9 +14,7 @@ const Search = ({ onResultSelect }) => {
     e.preventDefault();
     console.log(`Searching for ${searchInput}`);
     try {
-      const response = await axios.get(
-        `https://song-recommender-backend.onrender.com/search?query=${searchInput}`
-      );
+      const response = await axiosInstance.get(`/search?query=${searchInput}`);
       setSearchResults(response.data.tracks.items);
     } catch (error) {
       console.log("Error: ", error);
