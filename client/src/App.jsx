@@ -57,6 +57,8 @@ function App() {
     setSearchResults,
     isLoading,
     setIsLoading,
+    alert,
+    setAlert,
   };
 
   return (

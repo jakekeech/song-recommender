@@ -9,6 +9,7 @@ const Search = ({
   searchResults,
   setSearchResults,
   setIsLoading,
+  setAlert,
 }) => {
   const [searchInput, setSearchInput] = useState("");
   const searchResultsRef = useRef(null);
@@ -18,12 +19,21 @@ const Search = ({
     e.preventDefault();
     console.log(`Searching for ${searchInput}`);
     setIsLoading(true);
-    try {
-      const response = await axiosInstance.get(`/search?query=${searchInput}`);
-      setSearchResults(response.data.tracks.items);
-    } catch (error) {
-      console.log("Error: ", error);
-    } finally {
+
+    if (searchInput.trim() !== "") {
+      try {
+        const response = await axiosInstance.get(
+          `/search?query=${searchInput}`
+        );
+        setSearchResults(response.data.tracks.items);
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setAlert("BlankSearchAlert");
+      console.log("blank search");
       setIsLoading(false);
     }
   };
@@ -125,6 +135,7 @@ Search.propTypes = {
   searchResults: PropTypes.array.isRequired,
   setSearchResults: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default Search;

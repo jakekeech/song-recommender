@@ -20,6 +20,8 @@ const Alert = ({ alert, setAlert }) => {
             ? "Select songs to generate a recommendation!"
             : alert == "LimitAlert"
             ? "You can only select up to 5 songs!"
+            : alert == "BlankSearchAlert"
+            ? "Type something begin searching!"
             : ""}
         </h1>
       </div>
