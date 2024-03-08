@@ -4,20 +4,27 @@ import PropTypes from "prop-types";
 
 import { FaSearch } from "react-icons/fa";
 
-const Search = ({ onResultSelect }) => {
+const Search = ({
+  addToPlaylist,
+  searchResults,
+  setSearchResults,
+  setIsLoading,
+}) => {
   const [searchInput, setSearchInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const searchResultsRef = useRef(null);
   const searchBarRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(`Searching for ${searchInput}`);
+    setIsLoading(true);
     try {
       const response = await axiosInstance.get(`/search?query=${searchInput}`);
       setSearchResults(response.data.tracks.items);
     } catch (error) {
       console.log("Error: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,7 +50,7 @@ const Search = ({ onResultSelect }) => {
   };
 
   const handleSelectResult = (track) => {
-    onResultSelect(track);
+    addToPlaylist(track);
   };
 
   useEffect(() => {
@@ -53,7 +60,7 @@ const Search = ({ onResultSelect }) => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscapeKey);
     };
-  }, []);
+  });
 
   return (
     <div className="search-main">
@@ -114,7 +121,10 @@ const Search = ({ onResultSelect }) => {
 };
 
 Search.propTypes = {
-  onResultSelect: PropTypes.func.isRequired,
+  addToPlaylist: PropTypes.func.isRequired,
+  searchResults: PropTypes.array.isRequired,
+  setSearchResults: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default Search;

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-gradient-radial {
+    background: radial-gradient(circle, #f5f5f5, #e6f1e6);
+  }
+
 .main {
     @apply flex flex-col h-screen p-5 items-center w-full text-white
 }
@@ -27,7 +31,7 @@ input {
 }
 
 .search-results {
-    @apply absolute overflow-auto max-w-[800px] max-h-[300px] top-20 p-4 bg-[#357960] text-white w-full rounded-xl left-1/2 -translate-x-1/2 flex flex-col gap-2
+    @apply absolute overflow-auto max-w-[800px] max-h-[300px] top-20 p-4 bg-[#357960] text-white w-full rounded-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 shadow-2xl
 }
 
 .search-result-item {
@@ -39,7 +43,7 @@ input {
 }
 
 .playlist-main {
-    @apply flex flex-col bg-[#357960] max-w-[800px] w-full justify-center rounded-md p-4
+    @apply flex flex-col max-w-[800px] w-full justify-center rounded-md p-4
 }
 
 .generate-button {
@@ -64,4 +68,8 @@ input {
 
 .close-reco {
     @apply absolute right-3 text-gray-400 bg-transparent hover:bg-green-400 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center
+}
+
+.loading-main {
+    @apply flex flex-col h-full text-black justify-center items-center
 }

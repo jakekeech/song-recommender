@@ -4,6 +4,8 @@ import axiosInstance from "../api/index.js";
 const Playlist = ({
   playlist,
   setPlaylist,
+  searchResults,
+  setIsLoading,
   selectedTracks,
   setSelectedTracks,
   setRecoTracks,
@@ -41,6 +43,8 @@ const Playlist = ({
       alert("Select up to 5 tracks");
     }
 
+    setIsLoading(true);
+
     try {
       const response = await axiosInstance.get(
         `/generate?seeds=${selectedIds}`
@@ -49,11 +53,17 @@ const Playlist = ({
       setIsRecoOpen(true);
     } catch (error) {
       console.log("Error: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className={`playlist-main ${alert ? "mt-2" : "mt-10"}`}>
+    <div
+      className={`playlist-main ${alert ? "mt-2" : "mt-10"} ${
+        searchResults.length > 0 ? "bg-gray-400 bg-opacity-75" : "bg-[#357960]"
+      }`}
+    >
       <div className="flex justify-between border-b-2">
         <h1 className="text-2xl md:text-3xl mb-2 font-semibold">Playlist</h1>
         <button
@@ -131,6 +141,8 @@ const Playlist = ({
 Playlist.propTypes = {
   playlist: PropTypes.array.isRequired, // Specifies that playlist prop must be an array and is required
   setPlaylist: PropTypes.func.isRequired,
+  searchResults: PropTypes.array.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
   selectedTracks: PropTypes.array.isRequired,
   setSelectedTracks: PropTypes.func.isRequired,
   setRecoTracks: PropTypes.func.isRequired,
