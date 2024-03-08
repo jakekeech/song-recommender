@@ -39,11 +39,10 @@ const Playlist = ({
       setAlert("NullAlert");
     } else if (selectedTracks.length <= 5) {
       selectedIds = selectedTracks.map((track) => track.id);
+      setIsLoading(true);
     } else {
       alert("Select up to 5 tracks");
     }
-
-    setIsLoading(true);
 
     try {
       const response = await axiosInstance.get(
