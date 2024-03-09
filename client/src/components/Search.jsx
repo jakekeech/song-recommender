@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import { FaSearch } from "react-icons/fa";
 
-// TODO implement input shake on blank search
-
 const Search = ({
   addToPlaylist,
   searchResults,
