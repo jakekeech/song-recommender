@@ -7,11 +7,18 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+// TODO hide link from frontend by only allowing authenticated requests?
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const allowedOrigins = [
+  "https://song-reco.vercel.app",
+  "https://song-recommender-ps6zywla6-jakekeechs-projects.vercel.app",
+];
+
 const corsOptions = {
-  origin: "*",
+  origin: allowedOrigins,
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -95,6 +102,8 @@ const checkTokenMiddleware = async (req, res, next) => {
 
 app.get("/", (req, res) => {
   res.send("Server is running.");
+
+  console.log(req.headers.origin);
 });
 
 // Route for fetching data from Spotify
