@@ -5,11 +5,13 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const allowedOrigins = [
   "https://song-reco.vercel.app",
@@ -25,6 +27,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const mongoDbUri = process.env.MONGODB_URI;
+const jwtSecret = process.env.JWT_SECRET;
 
 const connect = async () => {
   try {
@@ -43,6 +46,12 @@ const TokenSchema = new mongoose.Schema({
 });
 const Token = mongoose.model("Token", TokenSchema);
 
+// Middleware to verify JWT token from HTTP-only cookie
+const authenticateJwt = (req, res, next) => {
+  const token = req.cookies.token;
+}
+
+// Generate spotify api token
 const generateToken = async () => {
   const client_id = process.env.CLIENT_ID;
   const client_secret = process.env.CLIENT_SECRET;
@@ -80,7 +89,7 @@ const generateToken = async () => {
   }
 };
 
-// Middleware to check and refresh token if needed
+// Middleware to check and refresh spotify api token if needed
 const checkTokenMiddleware = async (req, res, next) => {
   try {
     let token = await Token.findOne().sort({ expires_at: -1 });
@@ -99,10 +108,9 @@ const checkTokenMiddleware = async (req, res, next) => {
   }
 };
 
+// Retrieve JWT token
 app.get("/", (req, res) => {
   res.send("Server is running.");
-
-  console.log(req.headers.origin);
 });
 
 // Route for fetching data from Spotify
