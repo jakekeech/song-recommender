@@ -4,10 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const app = express();
-
-// TODO hide link from frontend by only allowing authenticated requests?
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
