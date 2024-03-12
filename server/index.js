@@ -4,8 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
@@ -27,7 +27,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const mongoDbUri = process.env.MONGODB_URI;
-const jwtSecret = process.env.JWT_SECRET;
 
 const connect = async () => {
   try {
@@ -46,10 +45,17 @@ const TokenSchema = new mongoose.Schema({
 });
 const Token = mongoose.model("Token", TokenSchema);
 
-// Middleware to verify JWT token from HTTP-only cookie
-const authenticateJwt = (req, res, next) => {
-  const token = req.cookies.token;
-}
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 5 minutes in milliseconds
+  max: 25, // limit each IP to 25 requests per windowMs
+  handler: (req, res) => {
+    res
+      .status(429)
+      .send("We are getting to many requests, please try again later!");
+  },
+});
+
+app.use(limiter);
 
 // Generate spotify api token
 const generateToken = async () => {
