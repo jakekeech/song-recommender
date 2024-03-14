@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 const allowedOrigins = [
   "https://song-reco.vercel.app",
-  "https://song-recommender-ps6zywla6-jakekeechs-projects.vercel.app",
+  "https://song-recommender-dg2nbo2kx-jakekeechs-projects.vercel.app",
 ];
 
 const corsOptions = {
