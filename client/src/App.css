@@ -73,3 +73,7 @@ input {
 .loading-main {
     @apply flex flex-col h-full text-black justify-center items-center
 }
+
+.error-main {
+    @apply text-black h-full w-full flex justify-center items-center inset-0
+}

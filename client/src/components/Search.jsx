@@ -10,6 +10,7 @@ const Search = ({
   setSearchResults,
   setIsLoading,
   setAlert,
+  setResError,
 }) => {
   const [searchInput, setSearchInput] = useState("");
   const searchResultsRef = useRef(null);
@@ -25,9 +26,15 @@ const Search = ({
         const response = await axiosInstance.get(
           `/search?query=${searchInput}`
         );
+        setResError("");
         setSearchResults(response.data.tracks.items);
       } catch (error) {
         console.log("Error: ", error);
+
+        if (error.response.status !== "") {
+          setResError(error.response.status);
+          setSearchResults([]);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -73,59 +80,65 @@ const Search = ({
   });
 
   return (
-    <div className="search-main">
-      <form className="search-form" autoComplete="off" onSubmit={handleSubmit}>
-        <input
-          ref={searchBarRef}
-          name="song"
-          type="text"
-          placeholder="Search for a song"
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-          }}
-        />
-        <button type="submit" className="search-button">
-          <FaSearch />
-        </button>
-        <div
-          ref={searchResultsRef}
-          className={`${
-            searchResults.length > 0 ? "search-results" : "hidden"
-          }`}
+    <div className="w-full">
+      <div className="search-main">
+        <form
+          className="search-form"
+          autoComplete="off"
+          onSubmit={handleSubmit}
         >
-          {searchResults &&
-            searchResults.map((track, index) => {
-              return (
-                <div key={index} className="search-result-item">
-                  {track.album.images && (
-                    <img
-                      className="w-10 h-10 rounded-md"
-                      src={track.album.images[0].url}
-                      alt=""
-                    />
-                  )}
-                  <div className="flex justify-between w-full">
-                    <div className="w-[150px] px-2 flex flex-col">
-                      <p className="truncate">{track.name}</p>
-                      <p className="truncate text-gray-300 italic">
-                        {track.artists[0].name}
-                      </p>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => handleSelectResult(track)}
-                      >
-                        Add
-                      </button>
+          <input
+            ref={searchBarRef}
+            name="song"
+            type="text"
+            placeholder="Search for a song"
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+            }}
+          />
+          <button type="submit" className="search-button">
+            <FaSearch />
+          </button>
+          <div
+            ref={searchResultsRef}
+            className={`${
+              searchResults.length > 0 ? "search-results" : "hidden"
+            }`}
+          >
+            {searchResults &&
+              searchResults.map((track, index) => {
+                return (
+                  <div key={index} className="search-result-item">
+                    {track.album.images && (
+                      <img
+                        className="w-10 h-10 rounded-md"
+                        src={track.album.images[0].url}
+                        alt=""
+                      />
+                    )}
+                    <div className="flex justify-between w-full">
+                      <div className="w-[150px] px-2 flex flex-col">
+                        <p className="truncate">{track.name}</p>
+                        <p className="truncate text-gray-300 italic">
+                          {track.artists[0].name}
+                        </p>
+                      </div>
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() => handleSelectResult(track)}
+                        >
+                          Add
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-        </div>
-      </form>
+                );
+              })}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
@@ -136,6 +149,7 @@ Search.propTypes = {
   setSearchResults: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
+  setResError: PropTypes.func.isRequired,
 };
 
 export default Search;

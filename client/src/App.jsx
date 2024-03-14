@@ -7,6 +7,7 @@ import Recommendations from "./components/Recommendations";
 import Navbar from "./components/Navbar";
 import Alert from "./components/Alert";
 import LoadingFull from "./components/LoadingFull";
+import Error from "./components/Error";
 
 function App() {
   const [playlist, setPlaylist] = useState([]);
@@ -16,6 +17,7 @@ function App() {
   const [isRecoOpen, setIsRecoOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [resError, setResError] = useState("");
 
   const addToPlaylist = (track) => {
     if (!playlist.includes(track)) {
@@ -51,6 +53,11 @@ function App() {
     setAlert,
   };
 
+  const errorProps = {
+    resError,
+    setResError,
+  };
+
   const searchProps = {
     addToPlaylist,
     searchResults,
@@ -59,6 +66,8 @@ function App() {
     setIsLoading,
     alert,
     setAlert,
+    resError,
+    setResError,
   };
 
   return (
@@ -66,6 +75,8 @@ function App() {
       <div className="main bg-gradient-radial">
         {isLoading ? (
           <LoadingFull />
+        ) : resError !== "" ? (
+          <Error {...errorProps} />
         ) : (
           <>
             <Navbar />

@@ -46,7 +46,7 @@ const TokenSchema = new mongoose.Schema({
 const Token = mongoose.model("Token", TokenSchema);
 
 const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 5 minutes in milliseconds
+  windowMs: 5 * 60 * 1000, // 5 minutes in milliseconds
   max: 25, // limit each IP to 25 requests per windowMs
   handler: (req, res) => {
     res
