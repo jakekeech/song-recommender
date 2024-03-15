@@ -39,6 +39,7 @@ function App() {
     setIsRecoOpen,
     alert,
     setAlert,
+    setResError,
   };
 
   const recommendationsProps = {

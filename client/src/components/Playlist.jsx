@@ -12,6 +12,7 @@ const Playlist = ({
   setIsRecoOpen,
   alert,
   setAlert,
+  setResError,
 }) => {
   const handleRemove = (track) => {
     const updatedPlaylist = playlist.filter((item) => item.id !== track.id);
@@ -51,7 +52,11 @@ const Playlist = ({
       setRecoTracks(response.data.tracks);
       setIsRecoOpen(true);
     } catch (error) {
+      setIsRecoOpen(false);
       console.log("Error: ", error);
+      if (error.response.status && error.response.status !== "") {
+        setResError(error.response.status);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -148,6 +153,7 @@ Playlist.propTypes = {
   setIsRecoOpen: PropTypes.func.isRequired,
   alert: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
+  setResError: PropTypes.func.isRequired,
 };
 
 export default Playlist;

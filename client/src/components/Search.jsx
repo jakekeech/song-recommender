@@ -30,10 +30,9 @@ const Search = ({
         setSearchResults(response.data.tracks.items);
       } catch (error) {
         console.log("Error: ", error);
-
-        if (error.response.status !== "") {
+        setSearchResults([]);
+        if (error.response.status && error.response.status !== "") {
           setResError(error.response.status);
-          setSearchResults([]);
         }
       } finally {
         setIsLoading(false);
