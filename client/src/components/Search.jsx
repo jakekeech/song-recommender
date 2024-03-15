@@ -31,7 +31,11 @@ const Search = ({
       } catch (error) {
         console.log("Error: ", error);
         setSearchResults([]);
-        if (error.response.status && error.response.status !== "") {
+        if (
+          error.response &&
+          error.response.status &&
+          error.response.status !== ""
+        ) {
           setResError(error.response.status);
         }
       } finally {

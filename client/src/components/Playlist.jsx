@@ -54,7 +54,11 @@ const Playlist = ({
     } catch (error) {
       setIsRecoOpen(false);
       console.log("Error: ", error);
-      if (error.response.status && error.response.status !== "") {
+      if (
+        error.response &&
+        error.response.status &&
+        error.response.status !== ""
+      ) {
         setResError(error.response.status);
       }
     } finally {
